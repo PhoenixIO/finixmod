@@ -6,7 +6,8 @@
 // @author       Phoenix
 // @match        https://evades.io/*
 // @match        https://eu.evades.io/*
-// @run-at document-start
+// @run-at       document-start
+// @grant        none
 // ==/UserScript==
 
 getScript('/index.html', html => {
