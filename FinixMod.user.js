@@ -2,7 +2,7 @@
 // @name         FinixMod Public
 // @namespace    https://evades.io/
 // @version      1.0.0
-// @description  Some useful features
+// @description  Improved timer, player hero and death timer in leaderboard.
 // @author       Phoenix
 // @match        https://evades.io/*
 // @match        https://eu.evades.io/*
