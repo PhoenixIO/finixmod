@@ -4,8 +4,7 @@
 // @version      1.0.0
 // @description  Improved timer, player hero and death timer in leaderboard.
 // @author       Phoenix
-// @match        https://evades.io/*
-// @match        https://eu.evades.io/*
+// @include      /http(?:s)?:\/\/(www\.)?(eu\.)?evades\.(io|online)//
 // @run-at       document-start
 // @grant        none
 // ==/UserScript==
