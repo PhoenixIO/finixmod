@@ -38,7 +38,6 @@ const client = {
 window.client = client;
 
 
-
 function getScript(url, callback) {
   const request = new XMLHttpRequest();
 
@@ -120,6 +119,22 @@ function editScript(script) {
     }, e.default.createElement("span", {
       className: "leaderboard-name ",
     }, deathTimer !== -1 ? deathTimer + ' • ' : '', this.props.name, \` (\${heroName})\`)
+  `);
+
+  // Fix leaderboard bug with multiple nicknames
+  script = script.replace('var s=Object.values(e);this.setState({leaderboardProps:{players:s,self:t}})', `
+    var players = [];
+    for (let player of Object.values(e)) {
+      if (!players.find(p => p.name === player.name)) {
+        players.push(player);
+      }
+    }
+    this.setState({
+      leaderboardProps: {
+        players: players,
+        self: t
+      }
+    })
   `);
 
   // Init types
