@@ -24,8 +24,10 @@ getScript('/index.html', html => {
       script = editScript(script);
       console.info(`[INFO] Script length after edit: ${script.length}`);
 
-      // Cap be replaced with script tag.
-      eval(script);
+      const element = document.createElement('script');
+      element.text = script;
+      element.async = false;
+      document.body.appendChild(element);
     });
   });
 });
@@ -51,6 +53,26 @@ function getScript(url, callback) {
 }
 
 function editScript(script) {
+  // Init
+  script = script.replace('parcelRequire=function', `
+    function capitalize(string = '') {
+      return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    }
+
+    function getKeyByValue(object, value) {
+      return Object.keys(object).find(key => object[key] === value);
+    }
+
+    function secondsFormat(time) {
+      const minutes = Math.floor(time / 60);
+      const seconds = time - minutes * 60;
+
+      return \`\${minutes}:\${seconds < 10 ? '0' : ''}\${seconds}\`;
+    }
+
+    parcelRequire = function
+  `);
+
   // Get reference for gameState object
   script = script.replace('var e=this.keys.difference(this.previousKeys),t=this.chatMessages.pop();', `
     client.gameState = this;
@@ -111,19 +133,4 @@ function editScript(script) {
   `);
 
   return script;
-}
-
-function capitalize(string = '') {
-  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-}
-
-function getKeyByValue(object, value) {
-  return Object.keys(object).find(key => object[key] === value);
-}
-
-function secondsFormat(time) {
-  const minutes = Math.floor(time / 60);
-  const seconds = time - minutes * 60;
-
-  return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 }
