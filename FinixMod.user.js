@@ -79,14 +79,14 @@ function editScript(script) {
   `);
 
   // Timer
-  script = script.replace(',e.strokeStyle="#000000",e.lineWidth=1', `
+  script = script.replace(',t.strokeStyle="#000000",t.lineWidth=1', `
     ;const survivalTime = secondsFormat(client.gameState.self.entity.survivalTime);
-    e.font = 'bold 30px Tahoma, Verdana, Segoe, sans-serif';
-    e.strokeText(survivalTime, 640, 80);
-    e.fillText(survivalTime, 640, 80);
+    t.font = 'bold 30px Tahoma, Verdana, Segoe, sans-serif';
+    t.strokeText(survivalTime, 640, 80);
+    t.fillText(survivalTime, 640, 80);
 
-    e.strokeStyle = '#000000';
-    e.lineWidth = 1
+    t.strokeStyle = '#000000';
+    t.lineWidth = 1
   `);
 
   // Set the leaderboard width to 230px
