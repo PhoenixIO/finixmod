@@ -97,7 +97,7 @@ function editScript(script) {
   `);
 
   // Heroes and death timer in the leaderboard
-  script = script.replace('return e.default.createElement("div",{className:"leaderboard-line "+this.props.regionClassName+(this.props.player.deathTimer>=0?" leaderboard-downed":"")},e.default.createElement("span",{className:"leaderboard-name"},this.props.name)', `
+  script = script.replace('return e.default.createElement("div",{className:"leaderboard-line "+this.props.regionClassName+(this.props.player.deathTimer>=0?" leaderboard-downed":""),onContextMenu:function(e){return t.props.onContextMenu(e,t.props.player.name)}},e.default.createElement("span",{className:"leaderboard-name"},this.props.name),', `
     const player = this.props.player;
     const globalEntity = client.gameState.globalEntities[player.id] || {};
     const deathTimer = Math.floor(player.deathTimer / 1000);
@@ -105,26 +105,9 @@ function editScript(script) {
     const heroConfig = client.config.heroes.find(hero => hero.name === heroName) || {};
 
     return e.default.createElement("div", {
-      className: "leaderboard-line " + this.props.regionClassName + (player.deathTimer >= 0 ? " leaderboard-downed" : "")
-    }, e.default.createElement("span", {
-      className: "leaderboard-name ",
-    }, deathTimer !== -1 ? deathTimer + ' • ' : '', this.props.name, \` (\${heroName})\`)
-  `);
-
-  // Fix leaderboard bug with multiple nicknames
-  script = script.replace('var s=Object.values(e);this.setState({leaderboardProps:{players:s,self:t}})', `
-    var players = [];
-    for (let player of Object.values(e)) {
-      if (!players.find(p => p.name === player.name)) {
-        players.push(player);
-      }
-    }
-    this.setState({
-      leaderboardProps: {
-        players: players,
-        self: t
-      }
-    })
+      className:"leaderboard-line " + this.props.regionClassName + (player.deathTimer >= 0 ? " leaderboard-downed" : ""),
+      onContextMenu:function(e){return t.props.onContextMenu(e,t.props.player.name)}},
+      e.default.createElement("span", {className: "leaderboard-name"}, deathTimer !== -1 ? deathTimer + ' • ' : '', this.props.name, \` (\${heroName})\`),
   `);
 
   // Init types
